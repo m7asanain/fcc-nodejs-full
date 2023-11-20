@@ -7,12 +7,24 @@ app.get('/', (req, res) => {
     res.send('<h1> Home Page</h1><a href="/api/products">products</a>')
 });
 
-app.get('/api/products', (req, res) => {
-    const newProducts = products.map((products) => {
-        const { id, name, image } = products;
-        return { id, name, image };
-    });
-    res.json(newProducts);
+// this for returning a specific item
+// app.get('/api/products', (req, res) => {
+//     const singleProduct = products.find((product) => product.id === 1);
+//     res.json(singleProduct);
+// });
+
+app.get('/api/products/:productID', (req, res) => {
+    const { productID } = req.params;
+
+    const singleProduct = products.find(
+        (product) => product.id === Number(productID)
+    );
+
+    if (!singleProduct) {
+        return res.status(404).send('Product does not exist!')
+    }
+    
+    res.json(singleProduct);
 });
 
 app.listen(port, () => {
