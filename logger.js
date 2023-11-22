@@ -3,7 +3,8 @@ const logger = (req, res, next) => {
     const url = req.url;
     const time = new Date().getFullYear();
 
-    console.log(`${method} "${url}" ${time}`);
+    // console.log(`${method} "${url}" ${time}`);
+    console.log(method, url, time);
 
     next();
 }
