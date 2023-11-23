@@ -1,5 +1,7 @@
 const express = require('express');
-const people = require('./routes/people')
+const people = require('./routes/people');
+const auth = require('./routes/auth');
+
 
 const app = express();
 const port = 3000;
@@ -15,16 +17,7 @@ app.use(express.json());
 
 app.use('/api/people', people);
 
-// moved it up
-app.post('/login', (req, res) => {
-    const { name } = req.body;
-
-    if (name) {
-        return res.status(200).send(`Welcom ${name}`);
-    }
-
-    res.status(401).send('Please provide Credentials');
-});
+app.use('/login', auth);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
