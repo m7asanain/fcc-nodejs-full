@@ -51,6 +51,26 @@ app.post('/login', (req, res) => {
     // }
 });
 
+app.put('/api/people/:id', (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
+    
+    const person = people.find((person) => person.id === Number(id));
+
+    if (!person) {
+        return res.status(404).json({ success: false, msg: `There is no person with this ${id} ID.` });
+    } 
+
+    const newPeople = people.map((person) => {
+        if (person.id === Number(id)) {
+            person.name = name;
+        }
+        return person;
+    })
+
+    res.status(200).send({ success: true, data: newPeople });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
